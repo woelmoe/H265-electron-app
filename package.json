@@ -7,15 +7,12 @@
     "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",
     "typecheck:web": "vue-tsc --noEmit -p tsconfig.web.json --composite false",
     "typecheck": "npm run typecheck:node && npm run typecheck:web",
-    "start": "electron-vite preview",
-    "dev": "cross-env IS_DEV=true electron-vite dev --watch",
-    "build": "electron-vite build",
+    "start": "electron-vite preview --outDir=dist",
+    "dev": "cross-env IS_DEV=true electron-vite dev --watch --outDir=dist",
+    "build": "electron-vite build --outDir=dist",
     "build-all": "yarn build && cd src/renderer && yarn && yarn build",
     "package-linux": "electron-forge package --platform=linux --arch=x64",
-    "package-win": "electron-forge package --platform=win32 --arch=x64",
-    "pull-submodule": "git submodule update --init",
-    "setup-win": "yarn && yarn pull-submodule && cd src/renderer && git checkout main && yarn && yarn build && cd ../../ && yarn build && yarn package-win",
-    "setup-linux": "yarn && yarn pull-submodule && cd src/renderer && git checkout main && yarn && yarn build && cd ../../ && yarn build && yarn package-linux"
+    "package-win": "electron-forge package --platform=win32 --arch=x64"
   },
   "devDependencies": {
     "@electron-forge/cli": "^7.2.0",

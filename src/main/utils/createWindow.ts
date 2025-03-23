@@ -27,40 +27,9 @@ export async function createWindow() {
     return { action: 'deny' }
   })
 
-  if (process.env.STILJIRA_URL) {
-    await handleLoadUrl(process.env.STILJIRA_URL)
-  } else {
-    loadStatic()
-  }
+  await mainWindow.loadURL('http://localhost:5173')
 
   mainWindow.webContents.on('did-fail-load', () => {
     console.log('WINDOW did-fail-load ERROR OCCURRED')
-    loadStatic()
   })
-
-  function loadStatic() {
-    mainWindow.loadFile(join(__dirname, '../renderer/dist/index.html'))
-    console.log('loaded from static')
-  }
-
-  async function handleLoadUrl(url: string) {
-    await mainWindow.loadURL(url)
-    const accessResult = await mainWindow.webContents.executeJavaScript(
-      'window.appAccessTitle'
-    )
-    if (accessResult !== 'stiljira-access') {
-      console.log('Access to render app denied')
-      loadStatic()
-      return
-    }
-
-    console.log('loaded from url', url)
-
-    mainWindow.webContents.on('console-message', (_event, _lvl, message) => {
-      if (message.includes('server connection lost')) {
-        console.log('console-message:', message)
-        loadStatic()
-      }
-    })
-  }
 }

@@ -2,8 +2,6 @@ import { BrowserWindow, shell } from 'electron'
 import { join } from 'path'
 import icon from '../../../resources/icon.png?asset'
 
-const isDev = process.env.IS_DEV === 'true'
-
 export async function createWindow() {
   const mainWindow = new BrowserWindow({
     width: 900,
@@ -14,7 +12,7 @@ export async function createWindow() {
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       sandbox: false,
-      devTools: isDev
+      devTools: import.meta.env.DEV
     }
   })
 
@@ -27,7 +25,11 @@ export async function createWindow() {
     return { action: 'deny' }
   })
 
-  await mainWindow.loadURL('http://localhost:5173')
+  if (import.meta.env.DEV) {
+    await mainWindow.loadURL('http://localhost:5173')
+  } else {
+    await mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
+  }
 
   mainWindow.webContents.on('did-fail-load', () => {
     console.log('WINDOW did-fail-load ERROR OCCURRED')

@@ -4,6 +4,7 @@ import path from 'node:path'
 
 export default defineConfig({
   plugins: [Vue()],
+  base: './',
   css: {
     preprocessorOptions: {
       scss: {

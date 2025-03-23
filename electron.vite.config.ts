@@ -9,10 +9,14 @@ export default defineConfig({
       externalizeDepsPlugin(),
       viteStaticCopy({
         targets: [
-          // {
-          //   src: 'src/main/manual',
-          //   dest: ''
-          // }
+          {
+            src: 'src/main/ffmpeg',
+            dest: ''
+          },
+          {
+            src: 'src/main/static',
+            dest: ''
+          }
         ]
       })
     ]
@@ -45,6 +49,7 @@ export default defineConfig({
       vue()
       // eslint()
     ],
+    base: './',
     css: {
       preprocessorOptions: {
         scss: {}

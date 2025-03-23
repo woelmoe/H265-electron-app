@@ -4,8 +4,10 @@ import 'dotenv/config'
 import { registerHotkeys } from './utils/registerHotkeys'
 import { createWindow } from './utils/createWindow'
 import path from 'path'
+import { spawnFfmpeg } from './utils/spawnFfmpeg'
 
-const ffmpegPath = path.join(__dirname, 'ffmpeg', 'ffmpeg')
+// const ffmpegPath = path.join(__dirname, 'ffmpeg', 'ffmpeg_h256')
+const ffmpegPath = path.join(__dirname, 'ffmpeg', 'rust_ffmpeg_example')
 
 console.log(ffmpegPath)
 
@@ -22,11 +24,10 @@ app.whenReady().then(async () => {
   })
 
   await createWindow()
+  spawnFfmpeg(ffmpegPath, [])
 
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
-
-    spawnFfmpeg(ffmpegPath, [])
   })
 })
 app.on('window-all-closed', () => {

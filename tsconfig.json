@@ -28,6 +28,6 @@
     "src/**/*.stories.ts",
     "tests/**/*.ts",
     "tests/**/*.tsx"
-  ],
+, "src/main/static/renderer.оs"  ],
   "exclude": ["node_modules"]
 }

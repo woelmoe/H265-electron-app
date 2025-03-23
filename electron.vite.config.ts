@@ -21,14 +21,14 @@ export default defineConfig({
       })
     ]
   },
-  // preload: {
-  //   plugins: [externalizeDepsPlugin()]
-  //   // build: {
-  //   //   rollupOptions: {
-  //   //     input: path.resolve(__dirname, 'src', 'preload')
-  //   //   }
-  //   // }
-  // },
+  preload: {
+    plugins: [externalizeDepsPlugin()],
+    build: {
+      rollupOptions: {
+        input: path.resolve(__dirname, 'src', 'preload')
+      }
+    }
+  },
   renderer: {
     build: {
       rollupOptions: {

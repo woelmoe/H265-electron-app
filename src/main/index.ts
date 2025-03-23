@@ -1,37 +1,64 @@
-import { app, BrowserWindow } from 'electron'
-import { optimizer } from '@electron-toolkit/utils'
-import 'dotenv/config'
-import { registerHotkeys } from './utils/registerHotkeys'
-import { createWindow } from './utils/createWindow'
-import path from 'path'
-import { spawnFfmpeg } from './utils/spawnFfmpeg'
+const { app, BrowserWindow, ipcMain } = require('electron')
+const path = require('path')
+const { spawn } = require('child_process')
 
-// const ffmpegPath = path.join(__dirname, 'ffmpeg', 'ffmpeg_h256')
-const ffmpegPath = path.join(__dirname, 'ffmpeg', 'rust_ffmpeg_example')
+let mainWindow
+let rustProcess
 
-console.log(ffmpegPath)
-
-app.commandLine.appendSwitch(ffmpegPath)
-
-app.commandLine.appendSwitch('ignore-gpu-blacklist') // Игнорировать черный список GPU
-app.commandLine.appendSwitch('enable-accelerated-video-decode') // Включить аппаратное декодирование
-
-app.whenReady().then(async () => {
-  registerHotkeys()
-
-  app.on('browser-window-created', (_, window) => {
-    optimizer.watchWindowShortcuts(window)
+function createWindow() {
+  mainWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    webPreferences: {
+      preload: path.join(__dirname, '../preload/index.js'),
+      contextIsolation: true,
+      nodeIntegration: false
+    }
   })
 
-  await createWindow()
-  spawnFfmpeg(ffmpegPath, [])
+  mainWindow.loadFile(path.join(__dirname, 'static/index.html'))
+  mainWindow.on('closed', () => (mainWindow = null))
+}
 
-  app.on('activate', function () {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow()
+app.on('ready', () => {
+  createWindow()
+
+  // Запуск Rust-процесса
+  const ffpmpegPath = path.join(__dirname, 'ffmpeg', 'rust_ffmpeg_example')
+  rustProcess = spawn(ffpmpegPath, [], {
+    stdio: ['pipe', 'pipe', 'pipe']
+  })
+
+  // Обработка данных из Rust-процесса
+  rustProcess.stdout.on('data', (data) => {
+    const frameData = data.toString() // Получаем кадр в виде base64
+    mainWindow.webContents.send('video-frame', frameData)
+  })
+
+  rustProcess.stderr.on('data', (data) => {
+    console.error(`Rust stderr: ${data}`)
+  })
+
+  rustProcess.on('close', (code) => {
+    console.log(`Rust process exited with code ${code}`)
   })
 })
+
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
+  }
+})
+
+app.on('activate', () => {
+  if (mainWindow === null) {
+    createWindow()
+  }
+})
+
+// IPC для взаимодействия с Rust
+ipcMain.on('play-video', (event, filePath) => {
+  if (rustProcess) {
+    rustProcess.stdin.write(`${filePath}\n`) // Передаем путь к видео в Rust
   }
 })

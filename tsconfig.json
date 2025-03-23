@@ -1,9 +1,5 @@
 {
   "compilerOptions": {
-    "noUnusedParameters": false,
-    "noUnusedLocals": false,
-    "noImplicitReturns": false,
-    "noErrorTruncation": false,
     "experimentalDecorators": true,
     "target": "ESNext",
     "module": "ESNext",
@@ -18,19 +14,20 @@
     "useDefineForClassFields": true,
     "sourceMap": true,
     "baseUrl": ".",
-    "types": ["jest"],
+    "types": ["jest", "electron-vite/node"],
+    "paths": {
+      "@/*": ["./src/renderer/*"],
+    },
     "lib": ["esnext", "dom", "dom.iterable", "scripthost", "webworker"]
   },
+  "extends": "@electron-toolkit/tsconfig/tsconfig.json",
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
     "src/**/*.stories.ts",
     "tests/**/*.ts",
-    "tests/**/*.tsx",
-    "src/main.js",
-    "vite.config.ts",
-    "electron.vite.config.ts"
+    "tests/**/*.tsx"
   ],
   "exclude": ["node_modules"]
 }

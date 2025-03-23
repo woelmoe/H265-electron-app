@@ -1,0 +1,31 @@
+{
+  "name": "stiljira",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "typecheck": "vue-tsc --noEmit -p tsconfig.json --composite false",
+    "dev": "vite",
+    "build": "vite build",
+    "start": "vite preview",
+    "prod": "yarn && yarn build && yarn start"
+  },
+  "dependencies": {
+    "json-server": "^1.0.0-beta.1",
+    "pinia": "^2.1.7",
+    "vue": "^3.4.29"
+  },
+  "devDependencies": {
+    "tsconfig-paths": "^4.2.0",
+    "@types/node": "^20.14.11",
+    "@vitejs/plugin-vue": "^5.0.5",
+    "@vue/eslint-config-prettier": "^9.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "prettier": "^3.1.1",
+    "sass": "^1.70.0",
+    "typescript": "^5.2.2",
+    "vite": "^5.3.1",
+    "vue-router": "^4.0.16",
+    "vue-tsc": "^2.0.21"
+  }
+}

@@ -1,0 +1,42 @@
+/* start-colors */
+/* white */
+$color-white: #ffffff;
+
+/* black */
+$black-color: #181818;
+
+/* gray */
+
+$gray-color-1: #dcdcdc;
+$gray-color-2: #e7e7e7;
+$gray-color-3: #778899;
+$gray-color-4: #aeaeae;
+
+/** shadow color */
+
+$shadow-color: rgba(34, 60, 80, 0.2);
+
+/** shadow */
+
+$shadow: 4rem 4rem 8rem 0 $shadow-color;
+
+/* blue-color */
+
+$blue-color-1: #1e90ff;
+
+/* end-colors */
+
+/* scrollbar */
+$scrollbar-width: 6rem;
+$scrollbar-radius: 8rem;
+
+/* header */
+$header-height: 54rem;
+
+/* fonts */
+$main-font: PTSans, Arial, sans-serif, Verdana;
+
+/* tasks */
+$task-column-width: 200rem;
+$padding: 8rem;
+$mini-padding: 5rem;

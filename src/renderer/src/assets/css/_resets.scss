@@ -1,0 +1,72 @@
+* {
+  margin: 0;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+b,
+em,
+i,
+ul,
+li,
+ol,
+td,
+th,
+a,
+span,
+code,
+figure,
+figcaption,
+blockquote,
+div,
+nav,
+main,
+caption,
+strong,
+button,
+table,
+img,
+aside,
+article,
+section,
+picture,
+object,
+*::after,
+*::before {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+button {
+  padding: 0;
+  border: none;
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+input {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  padding: 0;
+  outline: none;
+}
+
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  padding: 0;
+  outline: none;
+}
